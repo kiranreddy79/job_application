@@ -22,12 +22,25 @@ def lambda_handler(event, context):
         table.put_item(Item=application)
 
         return {
-            'statusCode': 200,
-            'body': json.dumps({'message': 'Application submitted', 'application_id': application['application_id']})
-        }
-    except Exception as e:
-        return {
-            'statusCode': 500,
-            'body': json.dumps({'error': str(e)})
+            "statusCode": 200,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "*"
+            },
+            "body": json.dumps({
+                'message': 'Application submitted',
+                'application_id': application['application_id']
+            })
         }
 
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "*"
+            },
+            "body": json.dumps({'error': str(e)})
+        }

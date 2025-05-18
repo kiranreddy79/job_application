@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Job Application Portal</title>
+</head>
+<body>
+  <h1>Available Jobs</h1>
+  <ul id="job-list"></ul>
+
+  <script>
+    const apiEndpoint = "https://6rslt9gv3g.execute-api.us-east-1.amazonaws.com/jobs";
+
+    async function fetchJobs() {
+      try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
+
+        const jobList = document.getElementById('job-list');
+        jobList.innerHTML = '';
+
+        data.jobs.forEach(job => {
+          const li = document.createElement('li');
+          li.textContent = job;
+          jobList.appendChild(li);
+        });
+      } catch (error) {
+        console.error('Failed to fetch jobs:', error);
+      }
+    }
+
+    fetchJobs();
+  </script>
+</body>
+</html>
